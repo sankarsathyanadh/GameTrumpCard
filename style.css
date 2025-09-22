@@ -1,0 +1,168 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+*{
+      font-family: "Luckiest Guy", cursive;
+      letter-spacing: 1px;
+      font-weight: 400;
+}
+
+ body {
+    font-family: sans-serif;
+    background: #eef2fc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  #home-page, #game-section {
+    margin: 20px;
+  }
+  #game-board {
+    display: grid;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .card {
+     width: 16vw;
+    height: 20vw;
+    /* width: 80px;
+    height: 100px; */
+    perspective: 600px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    /* color: transparent; */
+/* 
+    position: relative;
+    transition: background 0.2s, color 0.2s; */
+
+  }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+  .card.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    backface-visibility: hidden;
+  }
+  .card-front {
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(180deg);
+  }
+  .card-front img {
+    /* max-width: 70px;
+    max-height: 90px;
+    border-radius: 6px; */
+    max-width: 90%;
+  max-height: 90%;
+  border-radius: 6px;
+  }
+  .card-back {
+     background-image: url('cardbg.png'); 
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 1px solid #EF7722;
+  }
+  /* Radio button image selection styling */
+  .image-radio input[type="radio"] {
+    display: none;
+  }
+  /* .image-radio img {
+    width: 64px;
+    height: 64px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: border-color 0.2s;
+  } */
+  /* .image-radio input[type="radio"]:checked + img {
+    border: 2px solid #4668f2;
+  } */
+  /* .image-radio {
+    display: inline-block;
+    margin: 0 24px 0 0;
+    text-align: center;
+  } */
+  /* .image-radio span {
+    display: block;
+    margin-top: 8px;
+    font-size: 1rem;
+  } */
+
+/* .image-radio input[type="radio"] {
+    display: none;
+} */
+
+.image-radio img {
+    width: 64px;
+    height: 64px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: border-color 0.2s;
+}
+.image-radio input[type="radio"] + img , .image-radio input[type="radio"] + span{
+    border: 4px solid #EF7722;
+    padding: 8px;
+    border-radius: 8px;
+  
+}
+
+
+.image-radio input[type="radio"]:checked + img {
+    border: 4px solid #EF7722;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #FAA533;
+}
+.image-radio input[type="radio"]:checked + span {
+    border: 4px solid #EF7722;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #FAA533;
+
+}
+.image-radio {
+    display: inline-block;
+    margin: 0 24px 0 0;
+    text-align: center;
+    
+}
+.image-radio span {
+    display: block;
+    margin-top: 8px;
+    font-size: 1rem;
+}
+.btn_card{
+    border: none;
+    background-color : #EF7722;
+    color: #fff;
+   
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+.d-flex{
+    display: flex;
+
+}

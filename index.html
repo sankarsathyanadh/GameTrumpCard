@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Memory Card Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="home-page">
+        <h2>Memory Card Game</h2>
+       <div id="card-type-select">
+    <h3>Choose Card Set</h3>
+    <label class="image-radio">
+        <input type="radio" name="card-type" value="trump" checked>
+        <img src="trumpcards.png" alt="Trump Cards" />
+        <!-- <span>Trump Cards</span> -->
+    </label>
+    <label class="image-radio">
+        <input type="radio" name="card-type" value="animal" >
+        <img src="lion.png" alt="Animal Cards" />
+        <!-- <span>Animal Cards</span> -->
+    </label>
+    
+</div>
+        <br>
+        <!-- <label>Board Size:</label> -->
+        <!-- <select id="deck-size">
+            <option value="4">4 x 4 (16 cards)</option>
+            <option value="5">5 x 4 (20 cards)</option>
+            <option value="6">6 x 4 (24 cards)</option>
+        </select> -->
+        <div id="board-size-select">
+    <label>Board Size:</label><br>
+    <div class="d-flex" >
+         <label class="image-radio">
+        <input type="radio" name="deck-size" value="4" checked>
+        <span>Small</span>
+    </label><br>
+    <label class="image-radio">
+        <input type="radio" name="deck-size" value="5">
+               <span>Medium</span>
+
+    </label><br>
+    <label class="image-radio">
+        <input type="radio" name="deck-size" value="6">
+               <span>Large</span>
+
+    </label>
+
+    </div>
+   
+</div>
+
+        <br>
+        <div id="pairs-per-face-select">
+    <label>Pairs per card face:</label><br>
+     <div class="d-flex" >
+         <label class="image-radio">
+        <input type="radio" name="pairs-per-face" value="2" checked>
+       <span> 2</span>
+    </label><br>
+    <label class="image-radio">
+        <input type="radio" name="pairs-per-face" value="4">
+       <span>4</span>
+    </label>
+     </div>
+</div>
+
+        <!-- <label>Pairs per card face:</label>
+        <select id="pairs-per-face">
+            <option value="2">2</option>
+            <option value="4">4</option>
+        </select> -->
+        <br>
+        <button  class="btn_card" onclick="goToGame()">Start Game</button>
+        <hr>
+        <div class="instructions">
+            <h3>Instructions</h3>
+            <p>Flip cards to find pairs. Remove all cards by matching pairs. If the cards don't match, they flip back. 
+            Try to finish with the fewest flips and fastest time!</p>
+        </div>
+    </div>
+    <div id="game-section" style="display:none;">
+        <button class="btn_card" id="back-btn" onclick="goToHome()">Home</button>
+        <br>
+        <div id="stats">
+            <span>Moves: <span id="moves">0</span></span>
+            <span>Time: <span id="timer">0</span> s</span>
+        </div>
+        <div id="game-board"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

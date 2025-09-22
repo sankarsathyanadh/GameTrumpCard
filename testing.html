@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Memory Card Game with Flip Animation</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #eef2fc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  #home-page, #game-section {
+    margin: 20px;
+  }
+  #game-board {
+    display: grid;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .card {
+    width: 80px;
+    height: 100px;
+    perspective: 600px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+  .card.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    backface-visibility: hidden;
+  }
+  .card-front {
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(180deg);
+  }
+  .card-front img {
+    max-width: 70px;
+    max-height: 90px;
+    border-radius: 6px;
+  }
+  .card-back {
+    background: #4668f2;
+    border: 2px solid #3346b5;
+  }
+  /* Radio button image selection styling */
+  .image-radio input[type="radio"] {
+    display: none;
+  }
+  .image-radio img {
+    width: 64px;
+    height: 64px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: border-color 0.2s;
+  }
+  .image-radio input[type="radio"]:checked + img {
+    border: 2px solid #4668f2;
+  }
+  .image-radio {
+    display: inline-block;
+    margin: 0 24px 0 0;
+    text-align: center;
+  }
+  .image-radio span {
+    display: block;
+    margin-top: 8px;
+    font-size: 1rem;
+  }
+</style>
+</head>
+<body>
+  <div id="home-page">
+    <h2>Memory Card Game</h2>
+
+    <div>
+      <h3>Select Card Type:</h3>
+      <label class="image-radio">
+        <input type="radio" name="card-type" value="animal" checked />
+        <img src="https://i.imgur.com/M0YlyPR.png" alt="Animal Cards" />
+        <span>Animal Cards</span>
+      </label>
+      <label class="image-radio">
+        <input type="radio" name="card-type" value="trump" />
+        <img src="https://i.imgur.com/1OXkKqq.png" alt="Trump Cards" />
+        <span>Trump Cards</span>
+      </label>
+    </div>
+
+    <div id="board-size-select" style="margin-top: 20px;">
+      <label>Board Size:</label><br />
+      <label><input type="radio" name="deck-size" value="4" checked /> 4 x 4 (16 cards)</label><br />
+      <label><input type="radio" name="deck-size" value="5" /> 5 x 4 (20 cards)</label><br />
+      <label><input type="radio" name="deck-size" value="6" /> 6 x 4 (24 cards)</label>
+    </div>
+
+    <div id="pairs-per-face-select" style="margin-top: 20px;">
+      <label>Pairs per card face:</label><br />
+      <label><input type="radio" name="pairs-per-face" value="2" checked /> 2</label><br />
+      <label><input type="radio" name="pairs-per-face" value="4" /> 4</label>
+    </div>
+
+    <button style="margin-top: 20px;" onclick="goToGame()">Start Game</button>
+
+    <hr />
+    <div class="instructions">
+      <h3>Instructions</h3>
+      <p>
+        Flip cards to find pairs. Remove all cards by matching pairs. If the cards don't match, they flip back. Try to finish with the fewest flips and fastest time!
+      </p>
+    </div>
+  </div>
+
+  <div id="game-section" style="display:none;">
+    <button onclick="goToHome()">Back to Home</button>
+    <div id="stats" style="margin-top: 10px;">
+      <span>Moves: <span id="moves">0</span></span> | 
+      <span>Time: <span id="timer">0</span> s</span>
+    </div>
+    <div id="game-board"></div>
+  </div>
+
+<script>
+  // Image URLs arrays for cards
+  const animalImageUrls = [
+    "https://i.imgur.com/6PzizrM.png",
+    "https://i.imgur.com/oQOllQN.png",
+    "https://i.imgur.com/dOZjIhR.png",
+    "https://i.imgur.com/ywERLUH.png",
+    "https://i.imgur.com/id4yqJ1.png",
+    "https://i.imgur.com/t06p9kt.png",
+    "https://i.imgur.com/coKIH73.png",
+    "https://i.imgur.com/CgvqfwV.png"
+  ];
+
+  const trumpImageUrls = [
+    "https://i.imgur.com/voyZqgF.png",
+    "https://i.imgur.com/Z0SC4Nw.png",
+    "https://i.imgur.com/Iip70kK.png",
+    "https://i.imgur.com/cmkhnKY.png",
+    "https://i.imgur.com/95LJXGk.png",
+    "https://i.imgur.com/WxWKvlJ.png",
+    "https://i.imgur.com/3FJS8cT.png",
+    "https://i.imgur.com/JBDgf0D.png"
+  ];
+
+  let icons = animalImageUrls; // default
+  let flippedCards = [];
+  let matchedCards = 0;
+  let moves = 0;
+  let timer = 0;
+  let timerInterval = null;
+
+  // DOM elements
+  const board = document.getElementById("game-board");
+  const movesSpan = document.getElementById("moves");
+  const timerSpan = document.getElementById("timer");
+  const homePage = document.getElementById("home-page");
+  const gameSection = document.getElementById("game-section");
+
+  function getSelectedRadioValue(name) {
+    const selected = document.querySelector(`input[name="${name}"]:checked`);
+    return selected ? selected.value : null;
+  }
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  function resetStats() {
+    moves = 0;
+    timer = 0;
+    movesSpan.textContent = moves;
+    timerSpan.textContent = timer;
+  }
+
+  function startTimer() {
+    if (timerInterval) return;
+    timerInterval = setInterval(() => {
+      timer++;
+      timerSpan.textContent = timer;
+    }, 1000);
+  }
+
+  window.goToGame = function () {
+    const cardTypeValue = getSelectedRadioValue("card-type");
+    icons = cardTypeValue === "trump" ? trumpImageUrls : animalImageUrls;
+
+    homePage.style.display = "none";
+    gameSection.style.display = "block";
+
+    startGame();
+  };
+
+  window.goToHome = function () {
+    stopTimer();
+    gameSection.style.display = "none";
+    homePage.style.display = "block";
+  };
+
+  function startGame() {
+    board.innerHTML = "";
+    stopTimer();
+    resetStats();
+    flippedCards = [];
+    matchedCards = 0;
+
+    const size = parseInt(getSelectedRadioValue("deck-size"));
+    const pairsPerFace = parseInt(getSelectedRadioValue("pairs-per-face"));
+    const totalCards = size * 4;
+
+    if (totalCards % pairsPerFace !== 0) {
+      alert("Board size must be divisible by number of pairs per face.");
+      goToHome();
+      return;
+    }
+
+    const numUnique = totalCards / pairsPerFace;
+    let deckIcons = icons.slice(0, numUnique);
+    let deck = [];
+
+    deckIcons.forEach((imgUrl) => {
+      for (let i = 0; i < pairsPerFace; i++) {
+        deck.push(imgUrl);
+      }
+    });
+
+    deck = shuffle(deck);
+    board.style.gridTemplateColumns = `repeat(${size}, 80px)`;
+
+    deck.forEach((imgUrl, idx) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.dataset.icon = imgUrl;
+
+      card.innerHTML = `
+        <div class="card-inner">
+          <div class="card-front"><img src="${imgUrl}" alt="card image" /></div>
+          <div class="card-back"></div>
+        </div>
+      `;
+
+      card.addEventListener("click", onCardClick);
+      board.appendChild(card);
+    });
+  }
+
+  function onCardClick(e) {
+    const pairsPerFace = parseInt(getSelectedRadioValue("pairs-per-face"));
+    const card = e.currentTarget;
+
+    if (
+      card.classList.contains("flipped") ||
+      card.classList.contains("matched") ||
+      flippedCards.length >= pairsPerFace
+    )
+      return;
+
+    card.classList.add("flipped");
+    flippedCards.push(card);
+
+    if (flippedCards.length === 1 && moves === 0) {
+      startTimer();
+    }
+
+    if (flippedCards.length === pairsPerFace) {
+      moves++;
+      movesSpan.textContent = moves;
+
+      const allSame = flippedCards.every(
+        (c) => c.dataset.icon === flippedCards[0].dataset.icon
+      );
+
+      if (allSame) {
+        flippedCards.forEach((c) => {
+          c.classList.add("matched");
+          c.removeEventListener("click", onCardClick);
+        });
+        matchedCards += flippedCards.length;
+
+        if (matchedCards === board.children.length) {
+          stopTimer();
+          setTimeout(
+            () =>
+              alert(
+                `Congratulations! 🎉\nYou finished in ${timer} seconds with ${moves} moves.`
+              ),
+            300
+          );
+        }
+        flippedCards = [];
+      } else {
+        setTimeout(() => {
+          flippedCards.forEach((c) => {
+            c.classList.remove("flipped");
+          });
+          flippedCards = [];
+        }, 1000);
+      }
+    }
+  }
+
+  // Initially show home page
+  window.onload = () => {
+    homePage.style.display = "block";
+    gameSection.style.display = "none";
+  };
+</script>
+</body>
+</html>
