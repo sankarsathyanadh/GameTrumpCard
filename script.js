@@ -7,7 +7,7 @@
     "fox.png",
     "squirrel.png",
     "bear.png",
-    "robin.png"
+    "deer.png"
   ];
 
   const trumpImageUrls = [
@@ -21,7 +21,7 @@
     "trump7.png"
   ];
 
-  let icons = animalImageUrls; // default
+  let icons = trumpImageUrls; // default
   let flippedCards = [];
   let matchedCards = 0;
   let moves = 0;

@@ -1,32 +1,38 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+  * {   font-family: "Play", sans-serif; }
+/* 
 *{
       font-family: "Luckiest Guy", cursive;
       letter-spacing: 1px;
       font-weight: 400;
-}
+} */
 
  body {
     font-family: sans-serif;
-    background: #eef2fc;
+    /* background: #eef2fc; */
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    background-image: url('bgbody.png');
+    background-position: top center;
+    background-size: cover;
   }
   #home-page, #game-section {
-    margin: 20px;
+    margin: 10%;
+    margin-top: 10%;
   }
   #game-board {
     display: grid;
-    gap: 12px;
+    gap: 16px;
     justify-content: center;
     margin-top: 20px;
   }
   .card {
      width: 16vw;
-    height: 20vw;
+    height: 22vw;
     /* width: 80px;
     height: 100px; */
     perspective: 600px;
@@ -49,6 +55,8 @@
     height: 100%;
     transition: transform 0.5s;
     transform-style: preserve-3d;
+    /* padding-top: 8px;
+    padding-bottom: 8px; */
   }
   .card.flipped .card-inner {
     transform: rotateY(180deg);
@@ -86,44 +94,24 @@
   .image-radio input[type="radio"] {
     display: none;
   }
-  /* .image-radio img {
-    width: 64px;
-    height: 64px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    vertical-align: middle;
-    transition: border-color 0.2s;
-  } */
-  /* .image-radio input[type="radio"]:checked + img {
-    border: 2px solid #4668f2;
-  } */
-  /* .image-radio {
-    display: inline-block;
-    margin: 0 24px 0 0;
-    text-align: center;
-  } */
-  /* .image-radio span {
-    display: block;
-    margin-top: 8px;
-    font-size: 1rem;
-  } */
-
-/* .image-radio input[type="radio"] {
-    display: none;
-} */
+ 
 
 .image-radio img {
-    width: 64px;
-    height: 64px;
+    width: 156px;
+    /* width: 15%; */
+    /* height: 64px; */
+    aspect-ratio: 1 / 1;
     border: 2px solid transparent;
     cursor: pointer;
     vertical-align: middle;
     transition: border-color 0.2s;
+    
 }
 .image-radio input[type="radio"] + img , .image-radio input[type="radio"] + span{
     border: 4px solid #EF7722;
     padding: 8px;
     border-radius: 8px;
+    
   
 }
 
@@ -150,7 +138,9 @@
 .image-radio span {
     display: block;
     margin-top: 8px;
-    font-size: 1rem;
+    /* font-size: 1rem; */
+    font-size: clamp(1.5rem,10%,5rem);
+    color: #fff;
 }
 .btn_card{
     border: none;
@@ -158,11 +148,56 @@
     color: #fff;
    
     padding: 8px 16px;
-    font-size: 1rem;
+    font-size: 1.5rem;
     border-radius: 4px;
     text-transform: uppercase;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 .d-flex{
     display: flex;
 
 }
+.sub_txt{
+     font-size: clamp(1.8rem,10%,8rem);
+  color: #fff;
+  font-weight: 600;
+  display: block;
+  padding-bottom: 1%;
+  padding-top: 2%;
+}
+/* @media  (max-width: 768px) {
+   body {
+  display: none;
+  }
+ .image-radio img {
+    width: 600px ;
+ }
+} */
+
+/* @media (min-width: 1080px) and (min-height: 1920px) {
+   
+} */
+ .header{
+  width: 100%;
+  text-align: center;
+  padding-top: 3%;
+ }
+ .header button img {
+  width: 15%;
+ }
+ .stats{
+  text-align: center;
+  color: #fff;
+  font-size: 1.5rem;
+  width: 100%;
+ }
+  .stats .spanScore{
+       background-image: url(scorebar.png);
+    background-position: center;
+    /* height: 68px; */
+    background-size: cover;
+    padding: 10px 20px;
+    /* width: 384px; */
+
+ }

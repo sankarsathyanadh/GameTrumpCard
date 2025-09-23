@@ -5,11 +5,13 @@
     <title>Memory Card Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body  >
+        <div class="header" > <button  onclick="goToHome()" style="background: transparent; border: none;" > <img src="HomeButton.png"  alt="home"> </button>  </div>
+
     <div id="home-page">
-        <h2>Memory Card Game</h2>
+        <!-- <h2>Memory Card Game</h2> -->
        <div id="card-type-select">
-    <h3>Choose Card Set</h3>
+    <label class="sub_txt" >Choose Card Set</label><br>
     <label class="image-radio">
         <input type="radio" name="card-type" value="trump" checked>
         <img src="trumpcards.png" alt="Trump Cards" />
@@ -30,7 +32,7 @@
             <option value="6">6 x 4 (24 cards)</option>
         </select> -->
         <div id="board-size-select">
-    <label>Board Size:</label><br>
+    <label class="sub_txt">Board Size</label><br>
     <div class="d-flex" >
          <label class="image-radio">
         <input type="radio" name="deck-size" value="4" checked>
@@ -53,7 +55,7 @@
 
         <br>
         <div id="pairs-per-face-select">
-    <label>Pairs per card face:</label><br>
+    <label class="sub_txt">Pairs per card face:</label><br>
      <div class="d-flex" >
          <label class="image-radio">
         <input type="radio" name="pairs-per-face" value="2" checked>
@@ -81,11 +83,15 @@
         </div>
     </div>
     <div id="game-section" style="display:none;">
-        <button class="btn_card" id="back-btn" onclick="goToHome()">Home</button>
+        <!-- <button class="btn_card" id="back-btn" onclick="goToHome()">Home</button> -->
         <br>
-        <div id="stats">
-            <span>Moves: <span id="moves">0</span></span>
-            <span>Time: <span id="timer">0</span> s</span>
+        <div id="stats" class="stats">
+            <span class="spanScore">
+                &nbsp;
+                 <span>Moves: <span id="moves">0</span></span>
+                 <span>Time: <span id="timer">0</span> s</span>
+                 &nbsp;
+            </span>
         </div>
         <div id="game-board"></div>
     </div>
