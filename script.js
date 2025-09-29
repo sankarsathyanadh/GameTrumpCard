@@ -20,6 +20,16 @@
     "trump5.png",
     "trump7.png"
   ];
+   const birdImageUrls = [
+    "bird.png",
+    "bird02.png",
+    "bird03.png",
+    "bird04.png",
+    "bird05.png",
+    "bird06.png",
+    "bird07.png",
+    "robin.png"
+  ];
 
   let icons = trumpImageUrls; // default
   let flippedCards = [];
@@ -70,7 +80,8 @@
 
   window.goToGame = function () {
     const cardTypeValue = getSelectedRadioValue("card-type");
-    icons = cardTypeValue === "trump" ? trumpImageUrls : animalImageUrls;
+    // icons = cardTypeValue === "trump" ? trumpImageUrls : animalImageUrls;
+    icons = cardTypeValue === "trump" ? trumpImageUrls : cardTypeValue === "bird" ? birdImageUrls: animalImageUrls;
 
     homePage.style.display = "none";
     gameSection.style.display = "block";
@@ -169,6 +180,7 @@
           stopTimer();
           setTimeout(
             () =>
+              
               alert(
                 `Congratulations! 🎉\nYou finished in ${timer} seconds with ${moves} moves.`
               ),
