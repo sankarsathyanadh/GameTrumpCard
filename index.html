@@ -101,6 +101,27 @@
         </div>
         <div id="game-board"></div>
     </div>
+    <!-- <button id="open-popup-btn">Open Popup</button> -->
+
+      <div id="overlay" class="hidden"></div>
+
+    <div id="popup" class="hidden">
+        <div class="popup-header">
+            <h2> &nbsp; </h2>
+            <button onclick="closePopup()" id="close-popup-btn" class="close-btn" style="text-align: right;"><img src="cancel.png" alt="cancel" style="max-width: 10%;" ></button>
+        </div>
+        <div class="popup-content">
+            <img src="fireworks.png" alt="congrtz" style="width: 25%;" >
+            <h5>Congratulations!</h5><br>
+            <p id="popMessage">
+
+            </p>
+        </div>
+    </div>
+
+   
+
+
     <script src="script.js"></script>
 </body>
 </html>

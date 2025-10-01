@@ -178,14 +178,16 @@
 
         if (matchedCards === board.children.length) {
           stopTimer();
-          setTimeout(
-            () =>
+          
+          openPopup(timer,moves);
+          // setTimeout(
+          //   () =>
               
-              alert(
-                `Congratulations! 🎉\nYou finished in ${timer} seconds with ${moves} moves.`
-              ),
-            300
-          );
+          //     alert(
+          //       `Congratulations! 🎉\nYou finished in ${timer} seconds with ${moves} moves.`
+          //     ),
+          //   300
+          // );
         }
         flippedCards = [];
       } else {
@@ -204,3 +206,26 @@
     homePage.style.display = "block";
     gameSection.style.display = "none";
   };
+
+  // popup js 
+
+  // script.js
+const openPopupBtn = document.getElementById('open-popup-btn');
+const closePopupBtn = document.getElementById('close-popup-btn');
+const overlay = document.getElementById('overlay');
+const popup = document.getElementById('popup');
+
+function openPopup(timer,moves) {
+  document.getElementById("popMessage").innerHTML = "You finished in " + timer+ "seconds with"+ moves + "moves!";
+    overlay.classList.remove('hidden');
+    popup.classList.remove('hidden');
+}
+
+function closePopup() {
+    overlay.classList.add('hidden');
+    popup.classList.add('hidden');
+}
+
+openPopupBtn.addEventListener('click', openPopup);
+// closePopupBtn.addEventListener('click', closePopup);
+overlay.addEventListener('click', closePopup); // Close when clicking outside the popup
